@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curise Booking</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="mainContent">
+        <header class="container">
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a class="active" href="#">Sign Up</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="main-content container">
+
+            <div class="booking-content">
+                <h1>Cruise Queen</h1>
+                <p>Welcome to the Cruise Queen. This is first cruise service in Bangladesh for going to the united
+                    states.Book your ticket here. This is our online ticket booking platform. ENJOY your journey.</p>
+            </div>
+
+
+            <div id="bookingForm" class="booking-form">
+                <h3>Book Ocean Time</h3>
+                <div class="input-group">
+                    <label for="">Flying From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
+                </div>
+                <div class="input-group">
+                    <label for="">Flying To</label>
+                    <input class="inp-style" type="text" name="" placeholder="New York, USA">
+                </div>
+                <div class="inputs">
+                    <div class="input-group">
+                        <label" for="">Departure</label>
+                            <input class="inp-style" type="date" name="">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Return</label>
+                        <input class="inp-style" type="date" name="">
+                    </div>
+                </div>
+                <div class="input-group f-class">
+                    <div>
+                        <label for="">First Class ($160.00)</label>
+                        <input id="fClassCount" class="inp-style inp-width" type="text" name="" value="0">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <button onclick="clickBookingHandler('fClass', true)" class="btn btn-outline-success">+</button>
+                        <button onclick="clickBookingHandler('fClass', false)" class="btn btn-outline-danger">-</button>
+                    </div>
+                </div>
+
+                <div class="input-group f-class">
+                    <div>
+                        <label for="">Economy ($110.00)</label>
+                        <input id="economyCount" class="inp-style inp-width" type="text" name="" value="0">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <button onclick="clickBookingHandler('economy', true)"
+                            class="btn btn-outline-success">+</button>
+                        <button onclick="clickBookingHandler('economy', false)"
+                            class="btn btn-outline-danger">-</button>
+                    </div>
+                </div>
+                <div class="calculations">
+                    <div class="amount">
+                        <div class="left">
+                            <p>Subtotal</p>
+                        </div>
+                        <div class="right">
+                            <p>$ <span id="subtotal">00</span></p>
+                        </div>
+                    </div>
+
+                    <div class="amount">
+                        <div class="left">
+                            <p>Charge 10% VAT</p>
+                        </div>
+                        <div class="right">
+                            <p>$ <span id="tax">00</span></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="amount">
+                        <div class="left">
+                            <h4>Total</h4>
+                        </div>
+                        <div class="right">
+                            <p>$ <span id="total">00</span></p>
+                        </div>
+                    </div>
+                </div>
+                <button id="bookNowBtn" class="btn-style">Book Now</button>
+            </div>
+        </main>
+    </div>
+    <main id="bookedArea" class="booked-page">
+    </main>
+
+
+    <script>
+        function clickBookingHandler(ticket, isIncrease) {
+            const ticketInput = document.getElementById(ticket + 'Count');
+            const ticketCount = parseInt(ticketInput.value);
+            let ticketCountUpdated = ticketCount;
+            if (isIncrease == true) {
+                ticketCountUpdated = ticketCount + 1;
+            }
+            if (isIncrease == false && ticketCount > 0) {
+                ticketCountUpdated = ticketCount - 1;
+            }
+            ticketInput.value = ticketCountUpdated;
+            calculations();
+        }
+
+
+        function calculations() {
+            const fClassCount = getInputValue('fClass')
+            const economyCount = getInputValue('economy');
+
+            const subTotal = fClassCount * 160 + economyCount * 110;
+            document.getElementById('subtotal').innerText = subTotal;
+
+            const tax = Math.round(subTotal * 0.1);
+            document.getElementById('tax').innerText = tax;
+
+            const total = subTotal + tax;
+            document.getElementById('total').innerText = total;
+
+        }
+
+        function getInputValue(ticket) {
+            const ticketInput = document.getElementById(ticket + 'Count');
+            const ticketCount = parseInt(ticketInput.value);
+            return ticketCount;
+        }
+
+        const bookNow = document.getElementById('bookNowBtn')
+            .addEventListener('click', function () {
+                alert('Congratulations!!! Your ticket is booked');
+                // const bookedArea = document.getElementById('bookedArea')
+                //     .style.display = 'block';
+            })
+
+        // const fClassIncrease = document.getElementById('fClassIncrease')
+        //     .addEventListener('click', function(){
+        //         const fClassInput = document.getElementById('fClassInput');
+        //         const fClassCount = parseInt(fClassInput.value);
+        //         const fClassUpdated = fClassCount + 1;
+        //         fClassInput.value = fClassUpdated;
+        //     })
+
+    </script>
+</body>
+</html>
